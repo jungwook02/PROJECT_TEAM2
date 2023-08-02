@@ -9,9 +9,7 @@ module.exports = () => {
         clientID: process.env.KAKAO_ID, // 내 앱의 REST API
     }, 
     async(accessToken, refreshToken, profile, done) => { // 사용자가 유효한지 확인하는 verify 콜백함수 
-        // accessToken과 refreshToken: 인증을 유지시켜주는 토큰
-        // profile: 사용자 정보 객체
-        // done(error, user): passport-twitter가 자체적으로 req.login와 serializeUser 호출하여 req.session에 사용자 아이디를 저장한다
+        
         try{
         const exUser = await User.findOne({where: {sns_id: profile.id, provider:'kakao'}});
         done(null, exUser);

@@ -1,15 +1,12 @@
-// user.js 파일
 const mysql = require('mysql2');
 
-// MySQL 연결 설정
 const connection = mysql.createConnection({
-  host: 'localhost:3000',
+  host: 'localhost',
   user: 'JUNGWOOK',
   password: '20020520',
   database: 'kakao_users',
 });
 
-// MySQL 연결
 connection.connect((err) => {
   if (err) {
     console.error('Error connecting to MySQL database:', err);
@@ -18,9 +15,38 @@ connection.connect((err) => {
   console.log('Connected to MySQL database.');
 });
 
-// MySQL 모델 정의
 const User = {
-  // 여기에 MySQL 모델 정의를 추가하세요.
+  findById: function (id, callback) {
+    connection.query('SELECT * FROM kakao_users WHERE id = ?', [id], (err, results) => {
+      if (err) {
+        if (callback) {
+          return callback(err, null);
+        }
+        console.error('Error in findById:', err);
+      } else {
+        if (callback) {
+          return callback(null, results[0]);
+        }
+        console.log('findById result:', results[0]);
+      }
+    });
+  },
+  findOne: function (condition, callback) {
+    connection.query('SELECT * FROM kakao_users WHERE ?', condition, (err, results) => {
+      if (err) {
+        if (callback) {
+          return callback(err, null);
+        }
+        console.error('Error in findOne:', err);
+      } else {
+        if (callback) {
+          return callback(null, results[0]);
+        }
+        console.log('findOne result:', results[0]);
+      }
+    });
+  },
+  // 다른 함수들도 필요에 따라 추가할 수 있습니다.
 };
 
 module.exports = User;
