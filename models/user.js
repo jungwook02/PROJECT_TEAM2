@@ -1,4 +1,6 @@
 const mysql = require('mysql2');
+
+//DB 설정한 부분 이 부분만 수정하면됨
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'park',
