@@ -17,17 +17,19 @@ connection.connect((err) => {
 });
 
 const User = {
+    //db 에 저장
     saveUserInfo: function (userInfo, callback) {
         const sqlSelectUser = 'SELECT * FROM users WHERE kakao_id = ?';
         connection.query(sqlSelectUser, [userInfo.kakao_id], (err, result) => {
             if (err) {
                 return callback(err);
             }
-
+            //조회 함수 안넣고 그냥 결과로만 식별
             if (result.length > 0) {
                 console.log('이미 동일한 kakao_id를 가진 사용자가 존재합니다:');
                 console.log(result[0]);
                 return callback(null, result[0]);
+            //결과 없으면 저장
             } else {
                 const sqlInsertUser = 'INSERT INTO users (kakao_id, name, age_range, gender) VALUES (?, ?, ?, ?)';
                 const values = [

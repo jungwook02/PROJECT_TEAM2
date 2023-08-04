@@ -15,8 +15,8 @@ module.exports = () => {
                 age_range: profile._json.kakao_account?.age_range || null,
                 gender: profile._json.kakao_account?.gender || null,
             };
-
-            // 사용자 정보를 데이터베이스에 저장 또는 업데이트
+            
+            //user.js에서 사용자 정보 조회 후 정보 있으면 출력
             User.saveUserInfo(userInfo, (err, user) => {
                 if (err) {
                     console.error('Error fetching user information from Kakao:', err);
