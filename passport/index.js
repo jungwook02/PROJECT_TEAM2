@@ -1,16 +1,23 @@
-const passport = require('passport');
-const kakao = require('./kakaoStrategy');
-const User = require("../models/user"); // requiire 대신 require를 사용해야 합니다.
+// // passport/index.js
 
-module.exports = () => {
-    passport.serializeUser((user, done) => { // User가 아니라 user로 수정합니다.
-        done(null, user.id);
-    });
-    passport.deserializeUser((id, done) => {
-        User.findOne({ where: { id } }) // findOne 메서드 내부의 User가 아니라 user로 수정합니다.
-            .then((user) => done(null, user))
-            .catch(err => done(err));
-    });
+// const passport = require('passport');
+// const KakaoStrategy = require('passport-kakao').Strategy;
+// const User = require('../models/user');
 
-    kakao();
-}
+// module.exports = () => {
+//     passport.serializeUser((user, done) => {
+//         done(null, user.kakao_id);
+//     });
+
+//     passport.deserializeUser((kakao_id, done) => {
+//         // User.findOne 함수에서 사용자를 찾아야 합니다.
+//         User.findOne(kakao_id, (err, user) => {
+//             if (err) {
+//                 return done(err);
+//             }
+//             done(null, user || {}); // 사용자가 없는 경우 빈 객체를 전달합니다.
+//         });
+//     });
+
+//     // ... 나머지 코드 ...
+// };

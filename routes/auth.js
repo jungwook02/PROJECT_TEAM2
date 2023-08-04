@@ -1,4 +1,4 @@
-// auth.js
+// routes/auth.js
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
@@ -10,7 +10,7 @@ router.get('/kakao', passport.authenticate('kakao'));
 router.get('/kakao/callback', passport.authenticate('kakao', {
     failureRedirect: '/auth/login',
 }), (req, res) => {
-    res.redirect(`/${req.user.user_id}`);
+    res.redirect(`/${req.user.id}`);
 });
 
 module.exports = router;

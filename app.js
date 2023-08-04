@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
@@ -35,7 +34,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // passport-kakao 인증 전략 등록
-require('./passport/kakaoStrategy.js')(); // 실제 파일 경로로 대체해야 합니다.
+require('./passport/kakaoStrategy')(); // 실제 파일 경로로 대체해야 합니다.
 
 // auth.js 파일을 올바르게 가져와서 kakaoRoutes 변수에 할당합니다.
 const kakaoRoutes = require('./routes/auth.js');

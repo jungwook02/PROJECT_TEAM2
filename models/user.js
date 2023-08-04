@@ -1,52 +1,49 @@
 const mysql = require('mysql2');
-
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'JUNGWOOK',
-  password: '20020520',
-  database: 'kakao_users',
+    host: 'localhost',
+    user: 'park',
+    password: '2002',
+    database: 'kakao',
 });
 
 connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to MySQL database:', err);
-    return;
-  }
-  console.log('Connected to MySQL database.');
+    if (err) {
+        console.error('Error connecting to MySQL database:', err);
+        return;
+    }
+    console.log('Connected to MySQL database.');
 });
 
 const User = {
-  findById: function (id, callback) {
-    connection.query('SELECT * FROM kakao_users WHERE id = ?', [id], (err, results) => {
-      if (err) {
-        if (callback) {
-          return callback(err, null);
-        }
-        console.error('Error in findById:', err);
-      } else {
-        if (callback) {
-          return callback(null, results[0]);
-        }
-        console.log('findById result:', results[0]);
-      }
-    });
-  },
-  findOne: function (condition, callback) {
-    connection.query('SELECT * FROM kakao_users WHERE ?', condition, (err, results) => {
-      if (err) {
-        if (callback) {
-          return callback(err, null);
-        }
-        console.error('Error in findOne:', err);
-      } else {
-        if (callback) {
-          return callback(null, results[0]);
-        }
-        console.log('findOne result:', results[0]);
-      }
-    });
-  },
-  // 다른 함수들도 필요에 따라 추가할 수 있습니다.
+    saveUserInfo: function (userInfo, callback) {
+        const sqlSelectUser = 'SELECT * FROM users WHERE kakao_id = ?';
+        connection.query(sqlSelectUser, [userInfo.kakao_id], (err, result) => {
+            if (err) {
+                return callback(err);
+            }
+
+            if (result.length > 0) {
+                console.log('이미 동일한 kakao_id를 가진 사용자가 존재합니다:');
+                console.log(result[0]);
+                return callback(null, result[0]);
+            } else {
+                const sqlInsertUser = 'INSERT INTO users (kakao_id, name, age_range, gender) VALUES (?, ?, ?, ?)';
+                const values = [
+                    userInfo.kakao_id,
+                    userInfo.name,
+                    userInfo.age_range || null,
+                    userInfo.gender || null,
+                ];
+                connection.query(sqlInsertUser, values, (err, result) => {
+                    if (err) {
+                        return callback(err);
+                    }
+                    console.log('새로운 사용자 정보가 성공적으로 저장되었습니다!');
+                    return callback(null, result);
+                });
+            }
+        });
+    },
 };
 
 module.exports = User;
