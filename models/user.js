@@ -1,11 +1,14 @@
 const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'JUNGWOOK',
-  password: '20020520',
-  database: 'kakao_users',
+    host: 'svc.sel3.cloudtype.app',
+    user: 'admin',
+    password: '1234',
+    database: 'db',
+    port:30458
 });
+
+
 
 connection.connect((err) => {
   if (err) {

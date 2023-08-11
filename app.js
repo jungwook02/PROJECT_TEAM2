@@ -25,7 +25,7 @@ nunjucks.configure(path.join(__dirname, 'views'), {
 
 // session 미들웨어 등록
 app.use(session({
-  secret: 'YourSecretKey', // 세션 데이터 암호화에 사용되는 비밀키
+  secret: process.env.SECRET_KEY, // 세션 데이터 암호화에 사용되는 비밀키
   resave: false,
   saveUninitialized: false,
 }));
